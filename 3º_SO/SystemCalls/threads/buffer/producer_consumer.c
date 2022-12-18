@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <pthread.h>
+#include "limited_buffer.h"
+
+#define DATOS_A_PRODUCIR 20
+
+void *Consumer(void *buffer)
+{
+	bbuffer_t buf = (bbuffer_t)buffer;
+	int i, dato;
+	for(i = 0; i < DATOS_A_PRODUCIR; i++ ) {
+		get(buf, &dato);
+		printf("%d ", dato);
+	}
+	printf("\n");
+	return NULL;
+}
+
+void *Producer(void *buffer)
+{
+	bbuffer_t buf = (bbuffer_t)buffer;
+	int i;
+	for(i = 0; i < DATOS_A_PRODUCIR; i++ ) {
+		put(buf, i);
+	}
+	printf("\n");
+	return NULL;
+}
+
+int main(){
+	pthread_t consumerID, producerID;
+	bbuffer buffer;
+	init(&buffer);
+	pthread_create(&producerID, NULL, Producer, &buffer);
+	pthread_create(&consumerID, NULL, Consumer, &buffer);
+	pthread_join(producerID, NULL);
+	pthread_join(consumerID, NULL);
+	printf("\n");
+	return 0;
+}
