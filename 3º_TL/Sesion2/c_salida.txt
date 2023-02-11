@@ -1,0 +1,9 @@
+ (){ 	 ;	 , ;	 = .;	 = .+;	 (=; < ; ++){		 =  + .; 		 =  * ;	}	 =  * .;	 ( < )		 <<  <<  <<  << ;			 <<  <<  <<  << ;		 ;}
+Número de caracteres: 2
+Número de palabras: 1
+Número de líneas: 23
+Número de palabras reservadas: 7
+Número de identificadores: 25
+Número de enteros: 9
+Número de reales: 0
+Número de cadenas de caracteres: 4

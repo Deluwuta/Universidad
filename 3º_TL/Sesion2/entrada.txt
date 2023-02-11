@@ -1,0 +1,23 @@
+int main(){
+
+ 	int i;
+	float num, suma_1;
+
+	suma_1 = 1.E10;
+	num = 0.5e+2;
+
+	for (i=0;i < 10; i++){
+		suma_1 = suma_1 + 1.5; 
+		num = num * suma_1;
+
+	}
+
+	num = num * .5;
+	if (num < suma_1)
+		cout << "suma vale    " << suma_1 << "puntos" << endl;
+	else
+		cout << "num vale   " << num << "puntos" << endl;
+	
+	return 0;
+
+}
