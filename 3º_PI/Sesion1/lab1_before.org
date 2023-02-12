@@ -1,0 +1,28 @@
+#+title: Lab1 Before
+#+author: Alberto Trejo Segador
+
+* Exercises to do before the lab
+1. What is port 80? And 443?
+   El puerto número 80 es el puerto asignado para el protocolo de comunicación de internet "HTTP".
+   Por otro lado, el puerto 443 es un puerto comunmente usado para la conexiones seguras, siendo el puerto estándar para la conexiones de tipo "HTTPS".
+
+2. Indicate the different parts of these URLs:
+   2.1. http://campusvirtual.unex.es/zonauex/avuex/mod/choice/view.php?id=643927
+   2.2. http://localhost:8080/index.html#news
+   2.3. http://example.com/services/index.jsp?category=legal&id=patents
+
+3. Write the HTML code that generates the next web page:
+   Code in: ./first_page.html
+
+* Excercises to do in the Lab
+** Exercise 2
+Code in ./head_first_lounge
+
+** Exercise 3
+Code in ./cuestionario.html
+
+* Exercises to do after the lab
+1. What are clean URLs?
+   Una URL "limpia" hace referencia a aquella URL que no tiene parámetros ni variables y muestra palabras clave, relevantes para el usuario, haciendo que sea así más fácil la navegación.
+
+2. Try to obtain another examples of HTTP responses different to 200.

@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Nose</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div>
+            <p>Personal details</p>
+            <form>
+                <label for="fname">First Name </label>
+                <input type="text" name="fname" placeholder="First name only" />
+                <br />
+
+                <label for="lname">Last Name </label>
+                <input type="text" name="lname" placeholder="Last name only" />
+                <br />
+
+                <label for="birth">Date of Birth </label>
+                <input type="text" name="birth" />
+                <br />
+
+                <label for="email">Email </label>
+                <input type="email" name="email" placeholder="example@domain.com" />
+                <br />
+
+                <label for="website">URL </label>
+                <input type="url" name="website" placeholder="http://mysite.com" />
+                <br />
+
+                <label for="telephone">Telephone </label>
+                <input type="tel" name="telephone" placeholder="Eg. +447000 000000" />
+                <br />
+
+                <label for="shoesize">Shoesize </label>
+                <input type="number" name="shoesize" value="9" />
+                <br />
+
+                <label for="fly-skill">Flying Skill level (1 low - 100 high)</label>
+                <input type="range" name="fly-skill" oninput="this.nextElementSibling.value = this.value" />
+                <output>50</output>
+                <br />
+            </form>
+        </div>
+
+        <div>
+            <p>Billing address</p>
+            <form>
+                <label for="address">Address </label>
+                <textarea name="address" id="address" rows="4" cols="20"></textarea>
+                <br />
+
+                <label for="post-code">Post code </label>
+                <input type="text" name="post-code" />
+                <br />
+
+                <label for="country">Country </label>
+                <input type="text" name="country" />
+                <br />
+            </form>
+        </div>
+
+        <div>
+            <p>Card details</p>
+            <form>
+                <p>Card type</p>
+                <form>
+                    <input type="radio" name="card-type" value="visa"/>
+                    <label for="visa">VISA</label>
+
+                    <input type="radio" name="card-type" value="mastercard"/>
+                    <label for="mastercard">Mastercard</label>
+
+                    <input type="radio" name="card-type" value="amex"/>
+                    <label for="amex">AMEX</label>
+                </form>
+                <br />
+
+                <label for="card-name">Name </label>
+                <input type="text" name="card-name" placeholder="Name as it appears on your card" />
+                <br />
+
+                <label for="card-number">Card number</label>
+                <input type="number" name="card-number" />
+                <br />
+
+                <label for="security-number">Card number</label>
+                <input type="number" name="security-number" />
+                <br />
+
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" name="expiry-date" />
+                <br />
+            </form>
+        </div>
+
+        <div>
+            <br />
+            <input type="submit" name="place-order" value="Place Order" />
+        </div>
+    </body>
+</html>
