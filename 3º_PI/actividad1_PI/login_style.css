@@ -1,0 +1,28 @@
+body {
+}
+
+#google-login {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+#google-button {
+    color: whitesmoke;
+    background-color: aqua;
+
+    border-color: black;
+    border-radius: 20px;
+
+    width: 300px;
+    height: 50px;
+    font-weight: bold;
+}
+
+#google-logo {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+
+    padding-left: 0.75rem;
+    padding-top: 0.3rem;
+}
