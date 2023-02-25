@@ -1,0 +1,8 @@
+salidad_pascal.txt : pascal entrada_pascal.txt
+	cat entrada_pascal.txt | ./pascal > salida_pascal.txt
+
+pascal : lex.yy.c 
+	g++ -opascal lex.yy.c
+
+lex.yy.c : pascal.l 
+	flex pascal.l

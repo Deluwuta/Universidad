@@ -1,0 +1,12 @@
+PROGRAM ejemplo;  	
+	
+
+	VAR num:INTEGER; 
+
+BEGIN  
+	WRITE('Introduzca un numero: '); 
+	READLN(num); 
+	IF (num mod 2 = 0) 
+		THEN WRITE('NUMERO PAR') 
+		ELSE WRITE('NUMERO IMPAR'); 
+END. 
