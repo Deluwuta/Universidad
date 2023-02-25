@@ -9,35 +9,42 @@
 </head>
 <body>
     <h2>Inicia sesión</h2>
-    <div class="continua-login">
-        <input id="facebook-button" type="button" value="Continuar con Facebook">
-        <br>
-        <div id="google-login">
-            <img src="images/google-logo-png-open-2000.png" id="google-logo" alt="">
-            <input id="google-button" type="button" value="Continuar con Google">
+    <div id="main">
+        <div class="continua-login">
+            <div id="facebook-login">
+                <img src="images/facebook-emblem.jpg" id="facebook-logo" alt="">
+                <input id="facebook-button" type="button" value="Continuar con Facebook">
+            </div>
+            <br>
+            <div id="google-login">
+                <img src="images/google-logo.jpg" id="google-logo" alt="">
+                <input id="google-button" type="button" value="Continuar con Google">
+            </div>
+            <div id="separator">o</div>
         </div>
-        <p id="o-line">o</p>
-    </div>
-    <div class="credentials-login">
-        <input type="email" id="mail-input" placeholder="Introduce tu email">
-        <br>
-        <input type="password" id="password-input" placeholder="Introduce contraseña">
-        <br>
+        <div class="credentials-login">
+            <input type="email" id="mail-input" placeholder="Introduce tu email">
+            <br>
+            <input type="password" id="password-input" placeholder="Introduce contraseña">
+            <br>
+        </div>
         <a href="">¿Has olvidado tu contraseña?</a>
-    </div>
-    <br>
-    <input type="checkbox" id="remember-pass" name="remember-pass">
-    <label for="remember-pass">
-        Guardar sesión <br>
-        No lo marques si compartes ordenador
-    </label>
-    <br>
-    <input type="button" id="session-button" value="Inicia Sesión">
-    <p id="crear-cuenta">
-        ¿Nuevo en Just Eat? <a href="">Crear cuenta</a>
-    </p>
-    <div id="footer">
-        Al crear la cuenta, aceptas nuestros <a href="">terminos y condiciones</a>. Por favor, lee nuestra <a href="">politica de privacidad</a> y nuestra <a href="">politica de cookies</a>.
+        <br>
+        <input type="checkbox" id="remember-pass" name="remember-pass">
+        <label for="remember-pass">
+            Guardar sesión <br>
+            No lo marques si compartes ordenador
+        </label>
+        <br>
+        <div id="session-button">
+            <input type="button" id="session" value="Inicia Sesión">
+        </div>
+        <p id="crear-cuenta">
+            ¿Nuevo en Just Eat? <a href="">Crear cuenta</a>
+        </p>
+        <div id="footer">
+            Al crear la cuenta, aceptas nuestros <a href="">terminos y condiciones</a>. Por favor, lee nuestra <a href="">politica de privacidad</a> y nuestra <a href="">politica de cookies</a>.
+        </div>
     </div>
 </body>
 </html>

@@ -1,21 +1,68 @@
 body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    background: hsl(0, 0%, 100%);
+    padding: 1.5em;
+    border-radius: 30px;
+    box-shadow: 0 0 2em hsl(231deg, 62%, 94%);
+
+    margin-top: 80px;
+    margin-left: 250px;
+    margin-right: 250px;
 }
 
-#google-login {
-    margin-top: 1rem;
-    margin-left: 1rem;
+.continua-login, .credentials-login, #session-button {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.continua-login {
+    margin-top: 1.5rem;
+}
+
+#google-login, #facebook-login {
+    margin-top: -0.8rem;
+    margin-left: 0.3rem;
+}
+
+#google-button, #facebook-button, #session {
+    color: whitesmoke;
+
+    border-color: transparent;
+    border-radius: 3px;
+
+    text-align: right;
+
+    width: 375px;
+    height: 50px;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#facebook-button {   
+    background-color: #3C5A9A;
+    padding-right: 60px;
 }
 
 #google-button {
-    color: whitesmoke;
-    background-color: aqua;
+    background-color: rgb(66,133,244);
+    padding-right: 60px;
 
-    border-color: black;
-    border-radius: 20px;
+    margin-bottom: 0.4rem;
+}
 
-    width: 300px;
-    height: 50px;
-    font-weight: bold;
+#facebook-logo {
+    position: absolute;
+    width: 52px;
+    height: 42px;
+
+    padding-left: 0.28rem;
+    padding-top: 0.27rem;
 }
 
 #google-logo {
@@ -25,4 +72,51 @@ body {
 
     padding-left: 0.75rem;
     padding-top: 0.3rem;
+}
+
+#separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+#separator::before, #separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.6);
+    border-radius: 10px;
+}
+
+#session-button {
+    margin-top: 1rem;
+}
+
+.credentials-login {
+    margin-top: 1rem;
+}
+
+#mail-input, #password-input {
+    width: 375px;
+    height: 50px;
+
+    border-color: rgba(128, 128, 128, 0.4);
+    border-radius: 6px;
+
+    font-size: 16px;
+}
+
+#mail-input::placeholder, #password-input::placeholder {
+    color: rgba(128, 128, 128, 0.8);
+    padding-left: 0.6rem;
+}
+
+#remember-pass {
+    margin-top: 1rem;
+}
+
+#session {
+    background-color: rgb(243,109,0);
+
+    text-align: center;
+    height: 60px;
 }
