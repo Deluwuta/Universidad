@@ -1,0 +1,9 @@
+
+INT ID = ENTERO;
+FOR (INT ID = ENTERO; ID < ENTERO; ID++) ID = ID * REAL + ID;
+ID << TEXTO << ID;
+RETURN ID;
+
+Lista de identificadores:
+
+Numero total de lineas del fichero de entrada: 6

@@ -1,0 +1,7 @@
+/* Esto es una unidad de comentario */
+
+int x = 0;
+for (int i = 0; i < 10; i++) // Y esto es otro comentario
+  x = x * 2.5 + i;
+  cout << "Y esto es un texto entre comillas" << endl;
+return x;
