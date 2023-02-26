@@ -1,0 +1,83 @@
+#body {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#buscador {
+    position: relative;
+    text-align: center;
+}
+
+#background-img {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#texto {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    background: hsl(0, 0%, 100%);
+    border-radius: 15px;
+    box-shadow: 0 0 2em hsl(32, 15%, 64%);
+
+    text-align: center;
+
+    padding: 1em;
+    padding-left: 4rem;
+    padding-right: 4rem;
+
+    margin-top: -16rem;
+    margin-left: 39rem;
+    margin-right: 30rem;
+}
+
+#header {
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(243,109,0);
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#frase {
+    color: gray;
+    margin-top: 0.8rem;
+}
+
+#inputs-div {
+    border: 2px solid rgba(128, 128, 128, 0.6);
+    border-radius: 20px;
+    height: 50px;
+
+    margin-bottom: 1rem;
+}
+
+#restaurante1, #hola-label {
+    box-shadow: 0 0 2em hsl(32, 15%, 64%);
+}
+
+#restaurante1 {
+    border-radius: 20px;
+}
+
+#hola-label {
+    position: absolute;
+
+    background-color: white;
+
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    margin-left: -11.7rem;
+    margin-top: 9.5rem;
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2.45rem;
+    padding-right: 2.42rem;
+}
