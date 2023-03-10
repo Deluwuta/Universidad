@@ -22,7 +22,7 @@
 #include <map>
 using namespace std;
 
-int n_lineas = 1;
+int n_lineas = 0;
 map<string, int> mp;
 
 %}
@@ -45,15 +45,17 @@ cadenas_charas ["][^"]*["]
 
 %%
 
-\n  n_lineas++; REJECT;
+\n n_lineas++; REJECT;
 
 "//"       BEGIN(COM1);
-<COM1>"\n" BEGIN(0);
+<COM1>"\n" { printf("\n"); BEGIN(0); }
 "/*"       BEGIN(COM2);
 <COM2>"*/" BEGIN(0);
+"/*"       BEGIN(COM2);
+<COM2>"*/\n" { BEGIN(0); }
 <COM1,COM2>. ;
 
-^[ \t]*[\n]* ;
+^[ \t]*[\n]* n_lineas++;
 
 int    { printf("INT");    }
 float  { printf("FLOAT");  }
@@ -62,7 +64,7 @@ for    { printf("FOR");    }
 if     { printf("IF");     }
 else   { printf("ELSE");   }
 
-{identificador}  { mp.insert({ yytext, n_lineas }); printf("ID"); }
+{identificador}  { mp.insert({ yytext, (n_lineas+1) }); printf("ID"); }
 {entero}         { printf("ENTERO"); }
 {exponente}      { printf("REAL"); }
 
@@ -76,7 +78,7 @@ int main(){
   yylex(); // Llamada al analizador
   cout << endl << "Lista de identificadores:" << endl << endl;
 
-  for (auto itr = mp.begin(); itr != mp.end(); ++itr) {
+  for (auto itr = mp.begin(); itr != mp.end(); itr++) {
     cout << "Key: " << itr->first << " Value: " << itr->second << endl;
   }
 

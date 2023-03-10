@@ -1,10 +1,10 @@
-
-FOR (ID=ENTERO; ID < ENTERO; ID++) ID = ID * REAL + ID;
+FOR (ID=ENTERO; ID < ENTERO; ID++) 
+ID = ID * REAL + ID;
 RETURN ID;
 
 Lista de identificadores:
 
 Key: i Value: 3
-Key: x Value: 3
+Key: x Value: 5
 
-Numero total de lineas del fichero de entrada: 5
+Numero total de lineas del fichero de entrada: 6
