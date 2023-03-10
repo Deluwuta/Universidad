@@ -1,5 +1,5 @@
-salida_analizador.txt : analizador entrada_analizador.txt
-	cat entrada_analizador.txt | ./analizador > salida_analizador.txt
+salida_ejemplo.txt : analizador entrada_ejemplo.txt
+	cat entrada_ejemplo.txt | ./analizador > salida_ejemplo.txt
 
 analizador : lex.yy.c
 	g++ -oanalizador lex.yy.c

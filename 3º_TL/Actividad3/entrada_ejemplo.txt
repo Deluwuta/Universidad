@@ -1,0 +1,6 @@
+/* Esto es un bucle */
+
+for (i=0; i < 10; i++) // segundo comentario
+  
+  x = x * 2.5 + i;
+return x;

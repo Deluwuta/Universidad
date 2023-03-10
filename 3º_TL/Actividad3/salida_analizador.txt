@@ -7,3 +7,7 @@ RETURN ID;
 Lista de identificadores:
 
 Numero total de lineas del fichero de entrada: 6
+Key: cout Value: 4
+Key: endl Value: 4
+Key: i Value: 3
+Key: x Value: 2

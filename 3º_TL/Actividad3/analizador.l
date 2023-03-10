@@ -17,10 +17,13 @@
 //   Encerrados entre "/*" "*/"       -> /* Comentario 2 */
 // En el ejemplo son borrados, entonces no c
 
+#include <bits/stdc++.h>
 #include <iostream>
+#include <map>
 using namespace std;
 
-int n_lineas = 0;
+int n_lineas = 1;
+map<string, int> mp;
 
 %}
 
@@ -59,7 +62,7 @@ for    { printf("FOR");    }
 if     { printf("IF");     }
 else   { printf("ELSE");   }
 
-{identificador}  { printf("ID"); }
+{identificador}  { mp.insert({ yytext, n_lineas }); printf("ID"); }
 {entero}         { printf("ENTERO"); }
 {exponente}      { printf("REAL"); }
 
@@ -72,6 +75,11 @@ else   { printf("ELSE");   }
 int main(){
   yylex(); // Llamada al analizador
   cout << endl << "Lista de identificadores:" << endl << endl;
-  cout << "Numero total de lineas del fichero de entrada: " << n_lineas << endl;
+
+  for (auto itr = mp.begin(); itr != mp.end(); ++itr) {
+    cout << "Key: " << itr->first << " Value: " << itr->second << endl;
+  }
+
+  cout << endl << "Numero total de lineas del fichero de entrada: " << n_lineas << endl;
   return 0;
 }

@@ -514,14 +514,17 @@ char *yytext;
 //   Encerrados entre "/*" "*/"       -> /* Comentario 2 */
 // En el ejemplo son borrados, entonces no c
 
+#include <bits/stdc++.h>
 #include <iostream>
+#include <map>
 using namespace std;
 
-int n_lineas = 0;
+int n_lineas = 1;
+map<string, int> mp;
 
-#line 522 "lex.yy.c"
+#line 525 "lex.yy.c"
 
-#line 524 "lex.yy.c"
+#line 527 "lex.yy.c"
 
 #define INITIAL 0
 #define COM1 1
@@ -749,10 +752,10 @@ YY_DECL
 		}
 
 	{
-#line 43 "analizador.l"
+#line 46 "analizador.l"
 
 
-#line 755 "lex.yy.c"
+#line 758 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -818,103 +821,103 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 45 "analizador.l"
+#line 48 "analizador.l"
 n_lineas++; REJECT;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 47 "analizador.l"
+#line 50 "analizador.l"
 BEGIN(COM1);
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 48 "analizador.l"
+#line 51 "analizador.l"
 BEGIN(0);
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 49 "analizador.l"
+#line 52 "analizador.l"
 BEGIN(COM2);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 50 "analizador.l"
+#line 53 "analizador.l"
 BEGIN(0);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "analizador.l"
+#line 54 "analizador.l"
 ;
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 53 "analizador.l"
+#line 56 "analizador.l"
 ;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "analizador.l"
+#line 58 "analizador.l"
 { printf("INT");    }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "analizador.l"
+#line 59 "analizador.l"
 { printf("FLOAT");  }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "analizador.l"
+#line 60 "analizador.l"
 { printf("RETURN"); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "analizador.l"
+#line 61 "analizador.l"
 { printf("FOR");    }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "analizador.l"
+#line 62 "analizador.l"
 { printf("IF");     }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 60 "analizador.l"
+#line 63 "analizador.l"
 { printf("ELSE");   }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 62 "analizador.l"
-{ printf("ID"); }
+#line 65 "analizador.l"
+{ mp.insert({ yytext, n_lineas }); printf("ID"); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 63 "analizador.l"
+#line 66 "analizador.l"
 { printf("ENTERO"); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 64 "analizador.l"
+#line 67 "analizador.l"
 { printf("REAL"); }
 	YY_BREAK
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 66 "analizador.l"
+#line 69 "analizador.l"
 { printf("TEXTO"); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 68 "analizador.l"
+#line 71 "analizador.l"
 { ECHO; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 "analizador.l"
+#line 73 "analizador.l"
 ECHO;
 	YY_BREAK
-#line 917 "lex.yy.c"
+#line 920 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(COM1):
 			case YY_STATE_EOF(COM2):
@@ -1897,13 +1900,18 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 70 "analizador.l"
+#line 73 "analizador.l"
 
 
 int main(){
   yylex(); // Llamada al analizador
   cout << endl << "Lista de identificadores:" << endl << endl;
-  cout << "Numero total de lineas del fichero de entrada: " << n_lineas << endl;
+
+  for (auto itr = mp.begin(); itr != mp.end(); ++itr) {
+    cout << "Key: " << itr->first << " Value: " << itr->second << endl;
+  }
+
+  cout << endl << "Numero total de lineas del fichero de entrada: " << n_lineas << endl;
   return 0;
 }
 
