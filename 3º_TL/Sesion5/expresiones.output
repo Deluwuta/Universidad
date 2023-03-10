@@ -1,0 +1,406 @@
+State 10 conflicts: 2 shift/reduce
+State 20 conflicts: 2 shift/reduce
+State 21 conflicts: 2 shift/reduce
+State 22 conflicts: 2 shift/reduce
+State 23 conflicts: 2 shift/reduce
+State 24 conflicts: 6 shift/reduce
+State 25 conflicts: 6 shift/reduce
+
+
+Grammar
+
+    0 $accept: entrada $end
+
+    1 entrada: ε
+    2        | entrada linea
+
+    3 linea: expr '\n'
+    4      | SALIR '\n'
+
+    5 expr: NUMERO
+    6     | expr '+' expr
+    7     | expr '-' expr
+    8     | expr '*' expr
+    9     | expr '/' expr
+   10     | expr '%' expr
+   11     | expr '^' expr
+   12     | '-' expr
+   13     | '(' expr ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '\n' (10) 3 4
+    '%' (37) 10
+    '(' (40) 13
+    ')' (41) 13
+    '*' (42) 8
+    '+' (43) 6
+    '-' (45) 7 12
+    '/' (47) 9
+    '^' (94) 11
+    error (256)
+    NUMERO (258) 5
+    SALIR (259) 4
+    menos (260)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (15)
+        on left: 0
+    entrada (16)
+        on left: 1 2
+        on right: 0 2
+    linea (17)
+        on left: 3 4
+        on right: 2
+    expr (18)
+        on left: 5 6 7 8 9 10 11 12 13
+        on right: 3 6 7 8 9 10 11 12 13
+
+
+State 0
+
+    0 $accept: • entrada $end
+
+    $default  reduce using rule 1 (entrada)
+
+    entrada  go to state 1
+
+
+State 1
+
+    0 $accept: entrada • $end
+    2 entrada: entrada • linea
+
+    $end    shift, and go to state 2
+    NUMERO  shift, and go to state 3
+    SALIR   shift, and go to state 4
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    linea  go to state 7
+    expr   go to state 8
+
+
+State 2
+
+    0 $accept: entrada $end •
+
+    $default  accept
+
+
+State 3
+
+    5 expr: NUMERO •
+
+    $default  reduce using rule 5 (expr)
+
+
+State 4
+
+    4 linea: SALIR • '\n'
+
+    '\n'  shift, and go to state 9
+
+
+State 5
+
+   12 expr: '-' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 10
+
+
+State 6
+
+   13 expr: '(' • expr ')'
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 11
+
+
+State 7
+
+    2 entrada: entrada linea •
+
+    $default  reduce using rule 2 (entrada)
+
+
+State 8
+
+    3 linea: expr • '\n'
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+
+    '+'   shift, and go to state 12
+    '-'   shift, and go to state 13
+    '*'   shift, and go to state 14
+    '/'   shift, and go to state 15
+    '\n'  shift, and go to state 16
+    '%'   shift, and go to state 17
+    '^'   shift, and go to state 18
+
+
+State 9
+
+    4 linea: SALIR '\n' •
+
+    $default  reduce using rule 4 (linea)
+
+
+State 10
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+   12     | '-' expr •
+
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '%'       [reduce using rule 12 (expr)]
+    '^'       [reduce using rule 12 (expr)]
+    $default  reduce using rule 12 (expr)
+
+
+State 11
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+   13     | '(' expr • ')'
+
+    '+'  shift, and go to state 12
+    '-'  shift, and go to state 13
+    '*'  shift, and go to state 14
+    '/'  shift, and go to state 15
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+    ')'  shift, and go to state 19
+
+
+State 12
+
+    6 expr: expr '+' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 20
+
+
+State 13
+
+    7 expr: expr '-' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 21
+
+
+State 14
+
+    8 expr: expr '*' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 22
+
+
+State 15
+
+    9 expr: expr '/' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 23
+
+
+State 16
+
+    3 linea: expr '\n' •
+
+    $default  reduce using rule 3 (linea)
+
+
+State 17
+
+   10 expr: expr '%' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 24
+
+
+State 18
+
+   11 expr: expr '^' • expr
+
+    NUMERO  shift, and go to state 3
+    '-'     shift, and go to state 5
+    '('     shift, and go to state 6
+
+    expr  go to state 25
+
+
+State 19
+
+   13 expr: '(' expr ')' •
+
+    $default  reduce using rule 13 (expr)
+
+
+State 20
+
+    6 expr: expr • '+' expr
+    6     | expr '+' expr •
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+
+    '*'  shift, and go to state 14
+    '/'  shift, and go to state 15
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '%'       [reduce using rule 6 (expr)]
+    '^'       [reduce using rule 6 (expr)]
+    $default  reduce using rule 6 (expr)
+
+
+State 21
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    7     | expr '-' expr •
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+
+    '*'  shift, and go to state 14
+    '/'  shift, and go to state 15
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '%'       [reduce using rule 7 (expr)]
+    '^'       [reduce using rule 7 (expr)]
+    $default  reduce using rule 7 (expr)
+
+
+State 22
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    8     | expr '*' expr •
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '%'       [reduce using rule 8 (expr)]
+    '^'       [reduce using rule 8 (expr)]
+    $default  reduce using rule 8 (expr)
+
+
+State 23
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+    9     | expr '/' expr •
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '%'       [reduce using rule 9 (expr)]
+    '^'       [reduce using rule 9 (expr)]
+    $default  reduce using rule 9 (expr)
+
+
+State 24
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   10     | expr '%' expr •
+   11     | expr • '^' expr
+
+    '+'  shift, and go to state 12
+    '-'  shift, and go to state 13
+    '*'  shift, and go to state 14
+    '/'  shift, and go to state 15
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '+'       [reduce using rule 10 (expr)]
+    '-'       [reduce using rule 10 (expr)]
+    '*'       [reduce using rule 10 (expr)]
+    '/'       [reduce using rule 10 (expr)]
+    '%'       [reduce using rule 10 (expr)]
+    '^'       [reduce using rule 10 (expr)]
+    $default  reduce using rule 10 (expr)
+
+
+State 25
+
+    6 expr: expr • '+' expr
+    7     | expr • '-' expr
+    8     | expr • '*' expr
+    9     | expr • '/' expr
+   10     | expr • '%' expr
+   11     | expr • '^' expr
+   11     | expr '^' expr •
+
+    '+'  shift, and go to state 12
+    '-'  shift, and go to state 13
+    '*'  shift, and go to state 14
+    '/'  shift, and go to state 15
+    '%'  shift, and go to state 17
+    '^'  shift, and go to state 18
+
+    '+'       [reduce using rule 11 (expr)]
+    '-'       [reduce using rule 11 (expr)]
+    '*'       [reduce using rule 11 (expr)]
+    '/'       [reduce using rule 11 (expr)]
+    '%'       [reduce using rule 11 (expr)]
+    '^'       [reduce using rule 11 (expr)]
+    $default  reduce using rule 11 (expr)
