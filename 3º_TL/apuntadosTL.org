@@ -1,0 +1,112 @@
+#+title: Apuntados Tl
+#+author: Alberto Trejo Segador
+#+description: Ejercicios del tema 2 de la asignatura Teoria de Lenguajes
+
+* Ejercicios de las diapositivas
+** Pag 15
+(a+...+z+A+...+Z+_)(a+...+z+A+...+Z+_+0+...+9)*
+S ::= a
+    | b
+    | z
+    | A
+    | Z
+    | _
+
+S ::= Sa
+    | Sz
+    | SA
+    | SZ
+    | S_
+    | S0
+    | S9
+
+** Pag 34 (Minimizacion de AFD)
+Inicialmente tenemos 1 estado final, luego hacemos 2 particiones
+G1 = { E };     G2 = { A,B,C,D }
+G1 es minimo, pero hay que comprobar esto con G2.
+
+| G2 | a       | b       |
+|----+---------+---------+
+| A  | B -> G2 | C -> G2 |
+| B  | B -> G2 | D -> G2 |
+| C  | B -> G2 | C -> G2 |
+| D  | B -> G2 | E -> G1 | <---
+
+Como se observa D no es equivalente al comportamiento de los demas estados, luego es necesario dividir G2 en dos elementos.
+
+Particion = {G1, G2', G3}; G1 = { E }; G2' = { A,B,C }; G3 = { D }
+Repetimos lo mismo con G2'
+
+| G2' | a        | b        |
+|-----+----------+----------|
+| A   | B -> G2' | C -> G2' |
+| B   | B -> G2' | D -> G3  |
+| C   | B -> G2' | C -> G2' |
+
+Ahora se observa que B no se comporta igual que los demas estados, luego dividimos G2' de nuevo.
+
+Particion = { G1, G2", G3, G4 };
+    G1  = { E }
+    G2" = { A, C }
+    G3  = { D }
+    G4  = { B }
+
+Repetimos el mismo procedimiento con G2"
+| G2" | a       | b        |
+|-----+---------+----------|
+| A   | B -> G4 | C -> G2" |
+| C   | B -> G4 | C -> G2" |
+
+Ahora se observa que ambos estados se comportan de la misma forma, luego el automata reducido tendria un estado menos, sustituyendo A y C por G2".
+
+** Pag 35 (Equivalencia de AFD)
+Como siempre se empieza haciendo las particiones, una para estados finales y otra para los demas.
+Particion = { G1, G2 }; G1 = { q, r, w }; G2 = { p, s, v, u }
+
+En este caso se ha de comprobar el comportamiento de ambas particiones:
+
+| G1 | a       | b       |
+|----+---------+---------|
+| q  | r -> G1 | p -> G2 |
+| r  | q -> G1 | p -> G2 |
+| w  | w -> G1 | v -> G2 |
+
+| G2 | a       | b       |
+|----+---------+---------|
+| p  | q -> G1 | p -> G2 |
+| s  | p -> G2 | p -> G2 |
+| v  | w -> G1 | v -> G2 |
+| u  | w -> G1 | v -> G2 |
+
+Como se observa, "s" se comporta de forma distinta a los demas estados, luego se divide la particion G2
+Particiones = { G1, G2', G3 }; G1 = { q, r, w }; G2' = { p, v, u }; G3 = { s }
+
+Comprobamos el comportamiento de G2'
+| G2' | a  | b   |
+|-----+----+-----|
+| p   | G1 | G2' |
+| v   | G1 | G2' |
+| u   | G1 | G2' |
+
+Todos se comportan igual, por lo que son minimos.
+Tras formar el automata se observa que el estado G3 (s) es innaccesible, luego seria posible eliminarlo tambien.
+
+** Pag 36 (AFND)
+Un AFND son aquellos automatas los cuales para cada transicion se puede acabar en varios estados.
+Ademas, un AFD es un caso particular de AFND.
+
+** Pag 41 (Paso de un AFND a un AFD)
+Primero hay que calcular el estado inicial q0, siendo este la λ-clausura del estado inicial del AFND.
+q0 = λ-clausura(A) = { A,C } (En este caso entiendo que es porque puedo llegar a C a traves de A gracias a λ)
+
+Tras esto se calcula la funcion de transicion para el estado q0.
+| q0 | a | b | λ |
+|----+---+---+---|
+| A  | B | B | - |
+| C  | A | E | C |
+
+Desde el estado q0 podemos alcanzar B y E, pero ademas hay que comprobar, desde estos estados, si existe una transicion λ
+En el automata se observa que con λ, desde B, llegamos a D.
+Hay que dividir los nuevos estados por cada transicion (sin contar λ), luego:
+Para transicion "a": q1 = { A, B, C, D } (D sale de λ a partir de B)
+Para transicion "b": q2 = { B, D, E }
