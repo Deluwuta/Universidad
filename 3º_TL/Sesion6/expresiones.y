@@ -52,16 +52,17 @@ linea: expr '\n'	{cout << "El resultado es "<< $1 <<endl; prompt();}
       |error '\n' {yyerrok; prompt();}
 	    ;
 
-expr:    REAL 		          {$$=$1;}                      
-       | expr '+' expr 		    {$$=$1+$3;}              
-       | expr '-' expr        {$$=$1-$3;}            
-       | expr '*' expr        {$$=$1*$3;} 
-       | expr '/' expr        {$$=$1/$3;} 
-       /* | expr '%' expr        {$$=$1%$3;} */
-       | expr '^' expr        {$$=pow($1, $3);} // Preguntar si esto es legal
-       |'-' expr %prec menos  {$$= -$2;}
-       | '(' expr ')'         {$$=$2;}
-       ;
+expr: NUMERO               {$$=$1;} 
+    | REAL 		             {$$=$1;}                      
+    | expr '+' expr 		   {$$=$1+$3;}              
+    | expr '-' expr        {$$=$1-$3;}            
+    | expr '*' expr        {$$=$1*$3;} 
+    | expr '/' expr        {$$=$1/$3;} 
+    /* | expr '%' expr     {$$=$1%$3;} */
+    | expr '^' expr        {$$=pow($1, $3);} // Preguntar si esto es legal
+    |'-' expr %prec menos  {$$= -$2;}
+    | '(' expr ')'         {$$=$2;}
+    ;
 
 %%
 

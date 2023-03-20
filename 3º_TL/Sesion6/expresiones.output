@@ -1,14 +1,10 @@
-Terminals unused in grammar
-
-    NUMERO
-
-
-State 14 conflicts: 1 shift/reduce
-State 24 conflicts: 1 shift/reduce
-State 25 conflicts: 1 shift/reduce
-State 26 conflicts: 1 shift/reduce
-State 27 conflicts: 1 shift/reduce
-State 28 conflicts: 5 shift/reduce
+State 15 conflicts: 2 shift/reduce
+State 26 conflicts: 2 shift/reduce
+State 27 conflicts: 2 shift/reduce
+State 28 conflicts: 2 shift/reduce
+State 29 conflicts: 2 shift/reduce
+State 30 conflicts: 6 shift/reduce
+State 31 conflicts: 6 shift/reduce
 
 
 Grammar
@@ -23,49 +19,52 @@ Grammar
     5      | ID '=' expr '\n'
     6      | error '\n'
 
-    7 expr: REAL
-    8     | expr '+' expr
-    9     | expr '-' expr
-   10     | expr '*' expr
-   11     | expr '/' expr
-   12     | expr '^' expr
-   13     | '-' expr
-   14     | '(' expr ')'
+    7 expr: NUMERO
+    8     | REAL
+    9     | expr '+' expr
+   10     | expr '-' expr
+   11     | expr '*' expr
+   12     | expr '/' expr
+   13     | expr '%' expr
+   14     | expr '^' expr
+   15     | '-' expr
+   16     | '(' expr ')'
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     '\n' (10) 3 4 5 6
-    '(' (40) 14
-    ')' (41) 14
-    '*' (42) 10
-    '+' (43) 8
-    '-' (45) 9 13
-    '/' (47) 11
+    '%' (37) 13
+    '(' (40) 16
+    ')' (41) 16
+    '*' (42) 11
+    '+' (43) 9
+    '-' (45) 10 15
+    '/' (47) 12
     '=' (61) 5
-    '^' (94) 12
+    '^' (94) 14
     error (256) 6
     SALIR (258) 4
-    NUMERO <c_entero> (259)
+    NUMERO <c_entero> (259) 7
     ID <var> (260) 5
-    REAL <c_real> (261) 7
+    REAL <c_real> (261) 8
     menos (262)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (17)
+    $accept (18)
         on left: 0
-    entrada (18)
+    entrada (19)
         on left: 1 2
         on right: 0 2
-    linea (19)
+    linea (20)
         on left: 3 4 5 6
         on right: 2
-    expr <c_real> (20)
-        on left: 7 8 9 10 11 12 13 14
-        on right: 3 5 8 9 10 11 12 13 14
+    expr <c_real> (21)
+        on left: 7 8 9 10 11 12 13 14 15 16
+        on right: 3 5 9 10 11 12 13 14 15 16
 
 
 State 0
@@ -82,16 +81,17 @@ State 1
     0 $accept: entrada • $end
     2 entrada: entrada • linea
 
-    $end   shift, and go to state 2
-    error  shift, and go to state 3
-    SALIR  shift, and go to state 4
-    ID     shift, and go to state 5
-    REAL   shift, and go to state 6
-    '-'    shift, and go to state 7
-    '('    shift, and go to state 8
+    $end    shift, and go to state 2
+    error   shift, and go to state 3
+    SALIR   shift, and go to state 4
+    NUMERO  shift, and go to state 5
+    ID      shift, and go to state 6
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
 
-    linea  go to state 9
-    expr   go to state 10
+    linea  go to state 10
+    expr   go to state 11
 
 
 State 2
@@ -105,307 +105,384 @@ State 3
 
     6 linea: error • '\n'
 
-    '\n'  shift, and go to state 11
+    '\n'  shift, and go to state 12
 
 
 State 4
 
     4 linea: SALIR • '\n'
 
-    '\n'  shift, and go to state 12
+    '\n'  shift, and go to state 13
 
 
 State 5
 
-    5 linea: ID • '=' expr '\n'
-
-    '='  shift, and go to state 13
-
-
-State 6
-
-    7 expr: REAL •
+    7 expr: NUMERO •
 
     $default  reduce using rule 7 (expr)
 
 
+State 6
+
+    5 linea: ID • '=' expr '\n'
+
+    '='  shift, and go to state 14
+
+
 State 7
 
-   13 expr: '-' • expr
+    8 expr: REAL •
 
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
-
-    expr  go to state 14
+    $default  reduce using rule 8 (expr)
 
 
 State 8
 
-   14 expr: '(' • expr ')'
+   15 expr: '-' • expr
 
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
 
     expr  go to state 15
 
 
 State 9
 
+   16 expr: '(' • expr ')'
+
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
+
+    expr  go to state 16
+
+
+State 10
+
     2 entrada: entrada linea •
 
     $default  reduce using rule 2 (entrada)
 
 
-State 10
+State 11
 
     3 linea: expr • '\n'
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
 
-    '+'   shift, and go to state 16
-    '-'   shift, and go to state 17
-    '*'   shift, and go to state 18
-    '/'   shift, and go to state 19
-    '\n'  shift, and go to state 20
-    '^'   shift, and go to state 21
+    '+'   shift, and go to state 17
+    '-'   shift, and go to state 18
+    '*'   shift, and go to state 19
+    '/'   shift, and go to state 20
+    '\n'  shift, and go to state 21
+    '%'   shift, and go to state 22
+    '^'   shift, and go to state 23
 
 
-State 11
+State 12
 
     6 linea: error '\n' •
 
     $default  reduce using rule 6 (linea)
 
 
-State 12
+State 13
 
     4 linea: SALIR '\n' •
 
     $default  reduce using rule 4 (linea)
 
 
-State 13
+State 14
 
     5 linea: ID '=' • expr '\n'
 
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
-
-    expr  go to state 22
-
-
-State 14
-
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
-   13     | '-' expr •
-
-    '^'  shift, and go to state 21
-
-    '^'       [reduce using rule 13 (expr)]
-    $default  reduce using rule 13 (expr)
-
-
-State 15
-
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
-   14     | '(' expr • ')'
-
-    '+'  shift, and go to state 16
-    '-'  shift, and go to state 17
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-    '^'  shift, and go to state 21
-    ')'  shift, and go to state 23
-
-
-State 16
-
-    8 expr: expr '+' • expr
-
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
 
     expr  go to state 24
 
 
+State 15
+
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
+   15     | '-' expr •
+
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
+
+    '%'       [reduce using rule 15 (expr)]
+    '^'       [reduce using rule 15 (expr)]
+    $default  reduce using rule 15 (expr)
+
+
+State 16
+
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
+   16     | '(' expr • ')'
+
+    '+'  shift, and go to state 17
+    '-'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    ')'  shift, and go to state 25
+
+
 State 17
 
-    9 expr: expr '-' • expr
+    9 expr: expr '+' • expr
 
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
-
-    expr  go to state 25
-
-
-State 18
-
-   10 expr: expr '*' • expr
-
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
 
     expr  go to state 26
 
 
-State 19
+State 18
 
-   11 expr: expr '/' • expr
+   10 expr: expr '-' • expr
 
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
 
     expr  go to state 27
 
 
+State 19
+
+   11 expr: expr '*' • expr
+
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
+
+    expr  go to state 28
+
+
 State 20
+
+   12 expr: expr '/' • expr
+
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
+
+    expr  go to state 29
+
+
+State 21
 
     3 linea: expr '\n' •
 
     $default  reduce using rule 3 (linea)
 
 
-State 21
-
-   12 expr: expr '^' • expr
-
-    REAL  shift, and go to state 6
-    '-'   shift, and go to state 7
-    '('   shift, and go to state 8
-
-    expr  go to state 28
-
-
 State 22
 
-    5 linea: ID '=' expr • '\n'
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
+   13 expr: expr '%' • expr
 
-    '+'   shift, and go to state 16
-    '-'   shift, and go to state 17
-    '*'   shift, and go to state 18
-    '/'   shift, and go to state 19
-    '\n'  shift, and go to state 29
-    '^'   shift, and go to state 21
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
+
+    expr  go to state 30
 
 
 State 23
 
-   14 expr: '(' expr ')' •
+   14 expr: expr '^' • expr
 
-    $default  reduce using rule 14 (expr)
+    NUMERO  shift, and go to state 5
+    REAL    shift, and go to state 7
+    '-'     shift, and go to state 8
+    '('     shift, and go to state 9
+
+    expr  go to state 31
 
 
 State 24
 
-    8 expr: expr • '+' expr
-    8     | expr '+' expr •
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
+    5 linea: ID '=' expr • '\n'
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
 
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-    '^'  shift, and go to state 21
-
-    '^'       [reduce using rule 8 (expr)]
-    $default  reduce using rule 8 (expr)
+    '+'   shift, and go to state 17
+    '-'   shift, and go to state 18
+    '*'   shift, and go to state 19
+    '/'   shift, and go to state 20
+    '\n'  shift, and go to state 32
+    '%'   shift, and go to state 22
+    '^'   shift, and go to state 23
 
 
 State 25
 
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-    9     | expr '-' expr •
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
+   16 expr: '(' expr ')' •
 
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-    '^'  shift, and go to state 21
-
-    '^'       [reduce using rule 9 (expr)]
-    $default  reduce using rule 9 (expr)
+    $default  reduce using rule 16 (expr)
 
 
 State 26
 
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   10     | expr '*' expr •
-   11     | expr • '/' expr
-   12     | expr • '^' expr
+    9 expr: expr • '+' expr
+    9     | expr '+' expr •
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
 
-    '^'  shift, and go to state 21
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
 
-    '^'       [reduce using rule 10 (expr)]
-    $default  reduce using rule 10 (expr)
+    '%'       [reduce using rule 9 (expr)]
+    '^'       [reduce using rule 9 (expr)]
+    $default  reduce using rule 9 (expr)
 
 
 State 27
 
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   11     | expr '/' expr •
-   12     | expr • '^' expr
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   10     | expr '-' expr •
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
 
-    '^'  shift, and go to state 21
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
 
-    '^'       [reduce using rule 11 (expr)]
-    $default  reduce using rule 11 (expr)
+    '%'       [reduce using rule 10 (expr)]
+    '^'       [reduce using rule 10 (expr)]
+    $default  reduce using rule 10 (expr)
 
 
 State 28
 
-    8 expr: expr • '+' expr
-    9     | expr • '-' expr
-   10     | expr • '*' expr
-   11     | expr • '/' expr
-   12     | expr • '^' expr
-   12     | expr '^' expr •
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   11     | expr '*' expr •
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
 
-    '+'  shift, and go to state 16
-    '-'  shift, and go to state 17
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-    '^'  shift, and go to state 21
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
 
-    '+'       [reduce using rule 12 (expr)]
-    '-'       [reduce using rule 12 (expr)]
-    '*'       [reduce using rule 12 (expr)]
-    '/'       [reduce using rule 12 (expr)]
+    '%'       [reduce using rule 11 (expr)]
+    '^'       [reduce using rule 11 (expr)]
+    $default  reduce using rule 11 (expr)
+
+
+State 29
+
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   12     | expr '/' expr •
+   13     | expr • '%' expr
+   14     | expr • '^' expr
+
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
+
+    '%'       [reduce using rule 12 (expr)]
     '^'       [reduce using rule 12 (expr)]
     $default  reduce using rule 12 (expr)
 
 
-State 29
+State 30
+
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   13     | expr '%' expr •
+   14     | expr • '^' expr
+
+    '+'  shift, and go to state 17
+    '-'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
+
+    '+'       [reduce using rule 13 (expr)]
+    '-'       [reduce using rule 13 (expr)]
+    '*'       [reduce using rule 13 (expr)]
+    '/'       [reduce using rule 13 (expr)]
+    '%'       [reduce using rule 13 (expr)]
+    '^'       [reduce using rule 13 (expr)]
+    $default  reduce using rule 13 (expr)
+
+
+State 31
+
+    9 expr: expr • '+' expr
+   10     | expr • '-' expr
+   11     | expr • '*' expr
+   12     | expr • '/' expr
+   13     | expr • '%' expr
+   14     | expr • '^' expr
+   14     | expr '^' expr •
+
+    '+'  shift, and go to state 17
+    '-'  shift, and go to state 18
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+    '%'  shift, and go to state 22
+    '^'  shift, and go to state 23
+
+    '+'       [reduce using rule 14 (expr)]
+    '-'       [reduce using rule 14 (expr)]
+    '*'       [reduce using rule 14 (expr)]
+    '/'       [reduce using rule 14 (expr)]
+    '%'       [reduce using rule 14 (expr)]
+    '^'       [reduce using rule 14 (expr)]
+    $default  reduce using rule 14 (expr)
+
+
+State 32
 
     5 linea: ID '=' expr '\n' •
 
