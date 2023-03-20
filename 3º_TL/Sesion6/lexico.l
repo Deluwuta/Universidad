@@ -14,8 +14,9 @@ real ({entero}[.]{entero}?)|({entero}?[.]{entero})([eE][-+]?{entero})?
  
 %%
 [sS][aA][lL][iI][rR] return SALIR;
-^{identificador}     yylval.var = yytext; return ID;
+^{identificador}     strcpy(yylval.var, yytext); return ID;
 {entero}		         yylval.c_entero = atoi(yytext); return NUMERO;
+{real}               yylval.c_real = atof(yytext); return REAL;
 \n				           n_lineas++; return (yytext[0]);
 [\t ]			           ;	
 . 				           return (yytext[0]);

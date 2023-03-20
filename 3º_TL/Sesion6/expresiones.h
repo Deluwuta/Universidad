@@ -57,7 +57,8 @@ extern int yydebug;
     SALIR = 258,                   /* SALIR  */
     NUMERO = 259,                  /* NUMERO  */
     ID = 260,                      /* ID  */
-    menos = 261                    /* menos  */
+    REAL = 261,                    /* REAL  */
+    menos = 262                    /* menos  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -69,9 +70,10 @@ union YYSTYPE
 #line 22 "expresiones.y"
 
   int c_entero;
-  char* var;
+  char var[20];
+  float c_real;
 
-#line 75 "expresiones.h"
+#line 77 "expresiones.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

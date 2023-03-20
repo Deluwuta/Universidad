@@ -21,7 +21,8 @@ void prompt(){
 
 %union{
   int c_entero;
-  char* var;
+  char var[20];
+  float c_real;
 }
 
 %start entrada
@@ -29,12 +30,16 @@ void prompt(){
 
 %token <c_entero> NUMERO
 %token <var> ID
+%token <c_real> REAL
 
-%type <c_entero> expr
-%type <var> variable
+/* %type <c_entero> expr */
+/* %type <var> variable */
+%type <c_real> expr
 
 %left '+' '-'   /* asociativo por la izquierda, misma prioridad */
+/* %right '+' '-' */
 %left '*' '/'   /* asociativo por la izquierda, prioridad alta */
+
 %left menos
 
 %%
@@ -42,25 +47,21 @@ entrada: 		{prompt();}
       |entrada linea
       ;
 linea: expr '\n'	{cout << "El resultado es "<< $1 <<endl; prompt();}
-      |variable '\n' {cout << $1; prompt();}
 	    |SALIR '\n'	{return(0);	}         
+      |ID '=' expr '\n' {cout << "A la variable " << $1 << " se le asigna el valor " << $3 << endl; prompt();}
       |error '\n' {yyerrok; prompt();}
 	    ;
 
-expr:    NUMERO 		          {$$=$1;}                      
+expr:    REAL 		          {$$=$1;}                      
        | expr '+' expr 		    {$$=$1+$3;}              
        | expr '-' expr        {$$=$1-$3;}            
        | expr '*' expr        {$$=$1*$3;} 
        | expr '/' expr        {$$=$1/$3;} 
-       | expr '%' expr        {$$=$1%$3;}
+       /* | expr '%' expr        {$$=$1%$3;} */
        | expr '^' expr        {$$=pow($1, $3);} // Preguntar si esto es legal
        |'-' expr %prec menos  {$$= -$2;}
        | '(' expr ')'         {$$=$2;}
        ;
-
-variable: ID {$$=$1;}
-        /* | variable '=' expr {$$=$1;} */
-        ;
 
 %%
 
