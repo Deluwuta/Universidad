@@ -1,0 +1,276 @@
+Terminals which are not used
+
+   SUMA
+   MULTIPLICA
+
+
+Rules never reduced
+
+   12 expr_real: ENTERO
+
+
+State 3 conflicts: 1 reduce/reduce
+State 12 conflicts: 3 shift/reduce
+State 18 conflicts: 2 shift/reduce
+State 19 conflicts: 2 shift/reduce
+State 20 conflicts: 2 shift/reduce
+
+
+Grammar
+
+    0 $accept: entrada $end
+
+    1 entrada: /* empty */
+    2        | entrada linea
+
+    3 linea: expr '\n'
+    4      | expr_real '\n'
+    5      | SALIR '\n'
+
+    6 expr: ENTERO
+    7     | expr '+' expr
+    8     | expr '*' expr
+    9     | DUPLICA expr
+   10     | DUPLICA expr INCREMENTA expr
+
+   11 expr_real: REAL
+   12          | ENTERO
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 3 4 5
+'*' (42) 8
+'+' (43) 7
+error (256)
+ENTERO (258) 6 12
+REAL (259) 11
+SALIR (260) 5
+DUPLICA (261) 9 10
+INCREMENTA (262) 10
+SUMA (263)
+MULTIPLICA (264)
+
+
+Nonterminals, with rules where they appear
+
+$accept (13)
+    on left: 0
+entrada (14)
+    on left: 1 2, on right: 0 2
+linea (15)
+    on left: 3 4 5, on right: 2
+expr (16)
+    on left: 6 7 8 9 10, on right: 3 7 8 9 10
+expr_real (17)
+    on left: 11 12, on right: 4
+
+
+state 0
+
+    0 $accept: . entrada $end
+
+    $default  reduce using rule 1 (entrada)
+
+    entrada  go to state 1
+
+
+state 1
+
+    0 $accept: entrada . $end
+    2 entrada: entrada . linea
+
+    $end     shift, and go to state 2
+    ENTERO   shift, and go to state 3
+    REAL     shift, and go to state 4
+    SALIR    shift, and go to state 5
+    DUPLICA  shift, and go to state 6
+
+    linea      go to state 7
+    expr       go to state 8
+    expr_real  go to state 9
+
+
+state 2
+
+    0 $accept: entrada $end .
+
+    $default  accept
+
+
+state 3
+
+    6 expr: ENTERO .
+   12 expr_real: ENTERO .
+
+    '\n'      reduce using rule 6 (expr)
+    '\n'      [reduce using rule 12 (expr_real)]
+    $default  reduce using rule 6 (expr)
+
+
+state 4
+
+   11 expr_real: REAL .
+
+    $default  reduce using rule 11 (expr_real)
+
+
+state 5
+
+    5 linea: SALIR . '\n'
+
+    '\n'  shift, and go to state 10
+
+
+state 6
+
+    9 expr: DUPLICA . expr
+   10     | DUPLICA . expr INCREMENTA expr
+
+    ENTERO   shift, and go to state 11
+    DUPLICA  shift, and go to state 6
+
+    expr  go to state 12
+
+
+state 7
+
+    2 entrada: entrada linea .
+
+    $default  reduce using rule 2 (entrada)
+
+
+state 8
+
+    3 linea: expr . '\n'
+    7 expr: expr . '+' expr
+    8     | expr . '*' expr
+
+    '\n'  shift, and go to state 13
+    '+'   shift, and go to state 14
+    '*'   shift, and go to state 15
+
+
+state 9
+
+    4 linea: expr_real . '\n'
+
+    '\n'  shift, and go to state 16
+
+
+state 10
+
+    5 linea: SALIR '\n' .
+
+    $default  reduce using rule 5 (linea)
+
+
+state 11
+
+    6 expr: ENTERO .
+
+    $default  reduce using rule 6 (expr)
+
+
+state 12
+
+    7 expr: expr . '+' expr
+    8     | expr . '*' expr
+    9     | DUPLICA expr .
+   10     | DUPLICA expr . INCREMENTA expr
+
+    INCREMENTA  shift, and go to state 17
+    '+'         shift, and go to state 14
+    '*'         shift, and go to state 15
+
+    INCREMENTA  [reduce using rule 9 (expr)]
+    '+'         [reduce using rule 9 (expr)]
+    '*'         [reduce using rule 9 (expr)]
+    $default    reduce using rule 9 (expr)
+
+
+state 13
+
+    3 linea: expr '\n' .
+
+    $default  reduce using rule 3 (linea)
+
+
+state 14
+
+    7 expr: expr '+' . expr
+
+    ENTERO   shift, and go to state 11
+    DUPLICA  shift, and go to state 6
+
+    expr  go to state 18
+
+
+state 15
+
+    8 expr: expr '*' . expr
+
+    ENTERO   shift, and go to state 11
+    DUPLICA  shift, and go to state 6
+
+    expr  go to state 19
+
+
+state 16
+
+    4 linea: expr_real '\n' .
+
+    $default  reduce using rule 4 (linea)
+
+
+state 17
+
+   10 expr: DUPLICA expr INCREMENTA . expr
+
+    ENTERO   shift, and go to state 11
+    DUPLICA  shift, and go to state 6
+
+    expr  go to state 20
+
+
+state 18
+
+    7 expr: expr . '+' expr
+    7     | expr '+' expr .
+    8     | expr . '*' expr
+
+    '+'  shift, and go to state 14
+    '*'  shift, and go to state 15
+
+    '+'       [reduce using rule 7 (expr)]
+    '*'       [reduce using rule 7 (expr)]
+    $default  reduce using rule 7 (expr)
+
+
+state 19
+
+    7 expr: expr . '+' expr
+    8     | expr . '*' expr
+    8     | expr '*' expr .
+
+    '+'  shift, and go to state 14
+    '*'  shift, and go to state 15
+
+    '+'       [reduce using rule 8 (expr)]
+    '*'       [reduce using rule 8 (expr)]
+    $default  reduce using rule 8 (expr)
+
+
+state 20
+
+    7 expr: expr . '+' expr
+    8     | expr . '*' expr
+   10     | DUPLICA expr INCREMENTA expr .
+
+    '+'  shift, and go to state 14
+    '*'  shift, and go to state 15
+
+    '+'       [reduce using rule 10 (expr)]
+    '*'       [reduce using rule 10 (expr)]
+    $default  reduce using rule 10 (expr)

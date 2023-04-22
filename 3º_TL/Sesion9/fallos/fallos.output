@@ -1,0 +1,501 @@
+Terminals unused in grammar
+
+    SALIR
+
+
+State 13 conflicts: 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: lista_instrucciones $end
+
+    1 lista_instrucciones: instruccion
+    2                    | lista_instrucciones instruccion
+
+    3 instruccion: asignacion ';'
+    4            | alternativa
+    5            | bucle
+    6            | error ';'
+
+    7 asignacion: IDENTIFICADOR '=' expr
+    8           | IDENTIFICADOR '=' expr_logica
+
+    9 alternativa: IF expr_logica bloque
+   10            | IF expr_logica bloque ELSE bloque
+
+   11 bucle: WHILE expr_logica bloque
+
+   12 bloque: '{' lista_instrucciones '}'
+   13       | instruccion
+
+   14 expr: IDENTIFICADOR
+   15     | NUMERO
+   16     | expr '+' expr
+   17     | expr '*' expr
+
+   18 expr_logica: IDENTIFICADOR
+   19            | expr '<' expr
+   20            | expr '>' expr
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '*' (42) 17
+    '+' (43) 16
+    ';' (59) 3 6
+    '<' (60) 19
+    '=' (61) 7 8
+    '>' (62) 20
+    '{' (123) 12
+    '}' (125) 12
+    error (256) 6
+    NAN (258)
+    NUMERO (259) 15
+    SALIR (260)
+    IDENTIFICADOR (261) 7 8 14 18
+    IF (262) 9 10
+    ELSE (263) 10
+    WHILE (264) 11
+
+
+Nonterminals, with rules where they appear
+
+    $accept (18)
+        on left: 0
+    lista_instrucciones (19)
+        on left: 1 2
+        on right: 0 2 12
+    instruccion (20)
+        on left: 3 4 5 6
+        on right: 1 2 13
+    asignacion (21)
+        on left: 7 8
+        on right: 3
+    alternativa (22)
+        on left: 9 10
+        on right: 4
+    bucle (23)
+        on left: 11
+        on right: 5
+    bloque (24)
+        on left: 12 13
+        on right: 9 10 11
+    expr (25)
+        on left: 14 15 16 17
+        on right: 7 16 17 19 20
+    expr_logica (26)
+        on left: 18 19 20
+        on right: 8 9 10 11
+
+
+State 0
+
+    0 $accept: • lista_instrucciones $end
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+
+    lista_instrucciones  go to state 5
+    instruccion          go to state 6
+    asignacion           go to state 7
+    alternativa          go to state 8
+    bucle                go to state 9
+
+
+State 1
+
+    6 instruccion: error • ';'
+
+    ';'  shift, and go to state 10
+
+
+State 2
+
+    7 asignacion: IDENTIFICADOR • '=' expr
+    8           | IDENTIFICADOR • '=' expr_logica
+
+    '='  shift, and go to state 11
+
+
+State 3
+
+    9 alternativa: IF • expr_logica bloque
+   10            | IF • expr_logica bloque ELSE bloque
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 13
+
+    expr         go to state 14
+    expr_logica  go to state 15
+
+
+State 4
+
+   11 bucle: WHILE • expr_logica bloque
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 13
+
+    expr         go to state 14
+    expr_logica  go to state 16
+
+
+State 5
+
+    0 $accept: lista_instrucciones • $end
+    2 lista_instrucciones: lista_instrucciones • instruccion
+
+    $end           shift, and go to state 17
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+
+    instruccion  go to state 18
+    asignacion   go to state 7
+    alternativa  go to state 8
+    bucle        go to state 9
+
+
+State 6
+
+    1 lista_instrucciones: instruccion •
+
+    $default  reduce using rule 1 (lista_instrucciones)
+
+
+State 7
+
+    3 instruccion: asignacion • ';'
+
+    ';'  shift, and go to state 19
+
+
+State 8
+
+    4 instruccion: alternativa •
+
+    $default  reduce using rule 4 (instruccion)
+
+
+State 9
+
+    5 instruccion: bucle •
+
+    $default  reduce using rule 5 (instruccion)
+
+
+State 10
+
+    6 instruccion: error ';' •
+
+    $default  reduce using rule 6 (instruccion)
+
+
+State 11
+
+    7 asignacion: IDENTIFICADOR '=' • expr
+    8           | IDENTIFICADOR '=' • expr_logica
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 13
+
+    expr         go to state 20
+    expr_logica  go to state 21
+
+
+State 12
+
+   15 expr: NUMERO •
+
+    $default  reduce using rule 15 (expr)
+
+
+State 13
+
+   14 expr: IDENTIFICADOR •
+   18 expr_logica: IDENTIFICADOR •
+
+    error          reduce using rule 18 (expr_logica)
+    IDENTIFICADOR  reduce using rule 18 (expr_logica)
+    IF             reduce using rule 18 (expr_logica)
+    WHILE          reduce using rule 18 (expr_logica)
+    ';'            reduce using rule 14 (expr)
+    ';'            [reduce using rule 18 (expr_logica)]
+    '{'            reduce using rule 18 (expr_logica)
+    $default       reduce using rule 14 (expr)
+
+
+State 14
+
+   16 expr: expr • '+' expr
+   17     | expr • '*' expr
+   19 expr_logica: expr • '<' expr
+   20            | expr • '>' expr
+
+    '+'  shift, and go to state 22
+    '*'  shift, and go to state 23
+    '<'  shift, and go to state 24
+    '>'  shift, and go to state 25
+
+
+State 15
+
+    9 alternativa: IF expr_logica • bloque
+   10            | IF expr_logica • bloque ELSE bloque
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+    '{'            shift, and go to state 26
+
+    instruccion  go to state 27
+    asignacion   go to state 7
+    alternativa  go to state 8
+    bucle        go to state 9
+    bloque       go to state 28
+
+
+State 16
+
+   11 bucle: WHILE expr_logica • bloque
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+    '{'            shift, and go to state 26
+
+    instruccion  go to state 27
+    asignacion   go to state 7
+    alternativa  go to state 8
+    bucle        go to state 9
+    bloque       go to state 29
+
+
+State 17
+
+    0 $accept: lista_instrucciones $end •
+
+    $default  accept
+
+
+State 18
+
+    2 lista_instrucciones: lista_instrucciones instruccion •
+
+    $default  reduce using rule 2 (lista_instrucciones)
+
+
+State 19
+
+    3 instruccion: asignacion ';' •
+
+    $default  reduce using rule 3 (instruccion)
+
+
+State 20
+
+    7 asignacion: IDENTIFICADOR '=' expr •
+   16 expr: expr • '+' expr
+   17     | expr • '*' expr
+   19 expr_logica: expr • '<' expr
+   20            | expr • '>' expr
+
+    '+'  shift, and go to state 22
+    '*'  shift, and go to state 23
+    '<'  shift, and go to state 24
+    '>'  shift, and go to state 25
+
+    $default  reduce using rule 7 (asignacion)
+
+
+State 21
+
+    8 asignacion: IDENTIFICADOR '=' expr_logica •
+
+    $default  reduce using rule 8 (asignacion)
+
+
+State 22
+
+   16 expr: expr '+' • expr
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 30
+
+    expr  go to state 31
+
+
+State 23
+
+   17 expr: expr '*' • expr
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 30
+
+    expr  go to state 32
+
+
+State 24
+
+   19 expr_logica: expr '<' • expr
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 30
+
+    expr  go to state 33
+
+
+State 25
+
+   20 expr_logica: expr '>' • expr
+
+    NUMERO         shift, and go to state 12
+    IDENTIFICADOR  shift, and go to state 30
+
+    expr  go to state 34
+
+
+State 26
+
+   12 bloque: '{' • lista_instrucciones '}'
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+
+    lista_instrucciones  go to state 35
+    instruccion          go to state 6
+    asignacion           go to state 7
+    alternativa          go to state 8
+    bucle                go to state 9
+
+
+State 27
+
+   13 bloque: instruccion •
+
+    $default  reduce using rule 13 (bloque)
+
+
+State 28
+
+    9 alternativa: IF expr_logica bloque •
+   10            | IF expr_logica bloque • ELSE bloque
+
+    ELSE  shift, and go to state 36
+
+    $default  reduce using rule 9 (alternativa)
+
+
+State 29
+
+   11 bucle: WHILE expr_logica bloque •
+
+    $default  reduce using rule 11 (bucle)
+
+
+State 30
+
+   14 expr: IDENTIFICADOR •
+
+    $default  reduce using rule 14 (expr)
+
+
+State 31
+
+   16 expr: expr • '+' expr
+   16     | expr '+' expr •
+   17     | expr • '*' expr
+
+    '*'  shift, and go to state 23
+
+    $default  reduce using rule 16 (expr)
+
+
+State 32
+
+   16 expr: expr • '+' expr
+   17     | expr • '*' expr
+   17     | expr '*' expr •
+
+    $default  reduce using rule 17 (expr)
+
+
+State 33
+
+   16 expr: expr • '+' expr
+   17     | expr • '*' expr
+   19 expr_logica: expr '<' expr •
+
+    '+'  shift, and go to state 22
+    '*'  shift, and go to state 23
+
+    $default  reduce using rule 19 (expr_logica)
+
+
+State 34
+
+   16 expr: expr • '+' expr
+   17     | expr • '*' expr
+   20 expr_logica: expr '>' expr •
+
+    '+'  shift, and go to state 22
+    '*'  shift, and go to state 23
+
+    $default  reduce using rule 20 (expr_logica)
+
+
+State 35
+
+    2 lista_instrucciones: lista_instrucciones • instruccion
+   12 bloque: '{' lista_instrucciones • '}'
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+    '}'            shift, and go to state 37
+
+    instruccion  go to state 18
+    asignacion   go to state 7
+    alternativa  go to state 8
+    bucle        go to state 9
+
+
+State 36
+
+   10 alternativa: IF expr_logica bloque ELSE • bloque
+
+    error          shift, and go to state 1
+    IDENTIFICADOR  shift, and go to state 2
+    IF             shift, and go to state 3
+    WHILE          shift, and go to state 4
+    '{'            shift, and go to state 26
+
+    instruccion  go to state 27
+    asignacion   go to state 7
+    alternativa  go to state 8
+    bucle        go to state 9
+    bloque       go to state 38
+
+
+State 37
+
+   12 bloque: '{' lista_instrucciones '}' •
+
+    $default  reduce using rule 12 (bloque)
+
+
+State 38
+
+   10 alternativa: IF expr_logica bloque ELSE bloque •
+
+    $default  reduce using rule 10 (alternativa)
