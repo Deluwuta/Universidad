@@ -1,0 +1,7 @@
+Error semántico en la instrucción 4: la variable B no está definida
+Error semántico en la instrucción 6: se usa la operación % con operandos reales
+Error semántico en la instrucción 7: la variable A es de tipo entero y no se le puede asignar un valor real
+Error sintáctico en la instrucción 9  
+Error sintáctico en la instrucción 10  
+Error semántico en la instrucción 13: variables de tipo lógico no pueden aparecer en la parte derecha de una asignación
+Error sintáctico en la instrucción 14  

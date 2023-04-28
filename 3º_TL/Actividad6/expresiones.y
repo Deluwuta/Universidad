@@ -1,6 +1,7 @@
 %{
 #include <iostream>
 #include "tablaSimbolos.h"
+#include <fstream>
 #include <math.h>
 
 using namespace std;
@@ -9,11 +10,17 @@ using namespace std;
 extern int n_lineas;
 extern int yylex();
 extern map<string, valor> tabla;
+
+extern FILE* yyin;
+extern FILE* yyout;
+extern ofstream fout;
+
 bool errorSemantico = false;
 
 // Procedimientos auxiliares
 void yyerror(const char* s){
-	cout << "Error sintáctico en la instrucción "<< n_lineas+1<<endl;	
+	//cout << "Error sintáctico en la instrucción "<< n_lineas+1 <<endl;	
+	cout << "Error sintáctico en la instrucción "<< n_lineas <<endl;	
 } 
 
 void prompt(){
@@ -40,13 +47,11 @@ string valorLogico(bool var){
   struct {
     bool tipoValor;
     float valorReal;
-    int valorEntero;
-    bool valorBool;
   } c_expresion;
 }
 
 %start entrada
-%token SALIR DIV AND OR NOT EQUALS NOTEQUALS LOWEREQUALS GREATEREQUALS ASIGNACION
+%token DIV AND OR NOT EQUALS NOTEQUALS LOWEREQUALS GREATEREQUALS ASIGNACION COMENTARIO
 
 %token <c_entero> ENTERO
 %token <c_real> REAL
@@ -56,7 +61,8 @@ string valorLogico(bool var){
 %type <c_bool> logico
 %type <c_expresion> expr
 
-%left AND OR
+%left OR
+%left AND
 %left EQUALS NOTEQUALS
 %left '<' '>' LOWEREQUALS GREATEREQUALS
 %left '+' '-'   
@@ -64,44 +70,48 @@ string valorLogico(bool var){
 %left '^'
 %left menos
 %left NOT
-%left '(' ')'
+// %left '(' ')'
 
 %%
-entrada: { prompt(); }
-       |entrada linea
+entrada: {}
+       | entrada linea
        ;
 
 linea: ID ASIGNACION expr '\n' {
         if (!errorSemantico) {
-            cout << "Instrucción " << n_lineas << ": La variable " << $1 << ", de tipo " << tipoValor($3.tipoValor) << ", toma el valor " << $3.valorReal << endl; 
+            if ($3.tipoValor)
+                insertFloat(tabla, $1, $3.valorReal, n_lineas);
+            else
+                insertInt(tabla, $1, (int)$3.valorReal, n_lineas);
         }
         errorSemantico = false;
-        prompt();
+    }
+
+    |ID ASIGNACION expr COMENTARIO {
+        if (!errorSemantico) {
+            if ($3.tipoValor)
+                insertFloat(tabla, $1, $3.valorReal, n_lineas);
+            else
+                insertInt(tabla, $1, (int)$3.valorReal, n_lineas);
+        }
+        errorSemantico = false;
     }
 
     |ID ASIGNACION logico '\n' {
-        cout << "Instrucción " << n_lineas << ": ";
-        cout << "La variable " << $1 << ", de tipo lógico, toma el valor " << valorLogico($3) << endl;
-        prompt();
+        if(!errorSemantico)
+            insertBool(tabla, $1, $3, n_lineas);
+        errorSemantico = false;
     }
 
-    |SALIR '\n' { return(0); }         
-    |error '\n' {yyerrok; prompt();}
-    ;
+    |ID ASIGNACION logico COMENTARIO {
+        if(!errorSemantico)
+            insertBool(tabla, $1, $3, n_lineas);
+        errorSemantico = false;
+    }
 
-logico: BOOLEANO { $$ = $1; }
-      | logico AND logico {$$= $1 && $3;}
-      | logico OR logico {$$= $1 || $3;}
-      | logico EQUALS logico {$$= $1 == $3;}
-      | logico NOTEQUALS logico {$$= $1 != $3; }
-      | expr EQUALS expr {$$= $1.valorReal == $3.valorReal;}
-      | expr NOTEQUALS expr {$$= $1.valorReal != $3.valorReal; }
-      | expr '<' expr {$$= $1.valorReal < $3.valorReal; }
-      | expr '>' expr {$$= $1.valorReal > $3.valorReal; }
-      | expr LOWEREQUALS expr {$$= $1.valorReal <= $3.valorReal; }
-      | expr GREATEREQUALS expr {$$= $1.valorReal >= $3.valorReal; }
-      | NOT logico {$$= !($2);}
-      | '(' logico ')' {$$= $2;}
+    |error '\n' {yyerrok;}
+    |error COMENTARIO {yyerrok;}
+    ;
 
 expr: ENTERO              {
                               $$.tipoValor=false;
@@ -110,6 +120,26 @@ expr: ENTERO              {
     | REAL 		          {
                               $$.tipoValor=true;
                               $$.valorReal = $1; 
+                          }
+
+    | ID 		          {
+                            if(!existeIdentificador(tabla, $1)){
+                                cout << "Error semántico en la instrucción " << n_lineas << ": la variable " << $1 << " no está definida" << endl;
+                            }
+                            else{
+                                if(obtenerTipoValor(tabla, $1) == 0){
+                                    $$.tipoValor = true;
+                                    $$.valorReal = tabla.find($1)->second.valorReal;
+                                }
+                                else if(obtenerTipoValor(tabla, $1) == 1){
+                                    $$.tipoValor = false;
+                                    $$.valorReal = tabla.find($1)->second.valorEntero;
+                                }
+                                else{
+                                    errorSemantico = true;
+                                    cout << "Error semántico en la instrucción " << n_lineas << ": variables de tipo lógico no pueden aparecer en la parte derecha de una asignación" << endl;
+                                }
+                            }
                           }
 
     | expr '+' expr 	  {
@@ -168,8 +198,11 @@ expr: ENTERO              {
                                 errorSemantico = true;
                                 cout << "Error semántico en la instrucción " << n_lineas << ": se usa el operador % con operandos reales" << endl;
                               } 
-                              else 
-                                $$.valorReal =int($1.valorReal) % int($3.valorReal);
+                              else if ($3.valorReal == 0) {
+                                errorSemantico = true;
+                                cout << "Error semántico en la instrucción " << n_lineas << ": módulo por cero" << endl;
+                              }
+                              else $$.valorReal = $1.valorReal / $3.valorReal; 
                            }
 
     | expr '^' expr        {
@@ -188,21 +221,35 @@ expr: ENTERO              {
                            }
     ;
 
+logico: BOOLEANO { $$ = $1; }
+      | logico AND logico {$$= $1 && $3;}
+      | logico OR logico {$$= $1 || $3;}
+      | logico EQUALS logico {$$= $1 == $3;}
+      | logico NOTEQUALS logico {$$= $1 != $3; }
+      | expr EQUALS expr {$$= $1.valorReal == $3.valorReal;}
+      | expr NOTEQUALS expr {$$= $1.valorReal != $3.valorReal; }
+      | expr '<' expr {$$= $1.valorReal < $3.valorReal; }
+      | expr '>' expr {$$= $1.valorReal > $3.valorReal; }
+      | expr LOWEREQUALS expr {$$= $1.valorReal <= $3.valorReal; }
+      | expr GREATEREQUALS expr {$$= $1.valorReal >= $3.valorReal; }
+      | '(' logico ')' {$$= $2;}
+      | NOT logico {$$= !($2);}
+      ;
+
 %%
 
-int main(){
-     
-     n_lineas = 0;
-     
-     cout <<endl<<"******************************************************"<<endl;
-     cout <<"*                                                    *"<<endl;
-     cout <<"*      Calculadora de expresiones aritméticas        *"<<endl;
-     cout <<"*             Escriba SALIR para salir               *"<<endl;
-     cout <<"*                                                    *"<<endl;
-     cout <<"******************************************************"<<endl<<endl<<endl;
-     yyparse();
-     cout <<"****************************************************"<<endl;
-     cout <<"*                 ADIOS!!!!                        *"<<endl;
-     cout <<"****************************************************"<<endl;
-     return 0;
+int main(int argc, char* argv[]){
+
+    if(argc != 3) {
+        cout << "Usage: ./calculadora entrada.txt salida.txt" << endl;
+        return 0;
+    }
+
+    yyin = fopen(argv[1], "rt");
+    yyout = fopen(argv[2], "wt");
+    n_lineas = 1;
+    yyparse();
+    mostrarTabla(tabla, yyout);
+    fout.close();
+    return 0;
 }

@@ -54,16 +54,16 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    SALIR = 258,                   /* SALIR  */
-    DIV = 259,                     /* DIV  */
-    AND = 260,                     /* AND  */
-    OR = 261,                      /* OR  */
-    NOT = 262,                     /* NOT  */
-    EQUALS = 263,                  /* EQUALS  */
-    NOTEQUALS = 264,               /* NOTEQUALS  */
-    LOWEREQUALS = 265,             /* LOWEREQUALS  */
-    GREATEREQUALS = 266,           /* GREATEREQUALS  */
-    ASIGNACION = 267,              /* ASIGNACION  */
+    DIV = 258,                     /* DIV  */
+    AND = 259,                     /* AND  */
+    OR = 260,                      /* OR  */
+    NOT = 261,                     /* NOT  */
+    EQUALS = 262,                  /* EQUALS  */
+    NOTEQUALS = 263,               /* NOTEQUALS  */
+    LOWEREQUALS = 264,             /* LOWEREQUALS  */
+    GREATEREQUALS = 265,           /* GREATEREQUALS  */
+    ASIGNACION = 266,              /* ASIGNACION  */
+    COMENTARIO = 267,              /* COMENTARIO  */
     ENTERO = 268,                  /* ENTERO  */
     REAL = 269,                    /* REAL  */
     ID = 270,                      /* ID  */
@@ -77,7 +77,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 35 "expresiones.y"
+#line 41 "expresiones.y"
 
   int c_entero;
   char var[25];
@@ -86,11 +86,9 @@ union YYSTYPE
   struct {
     bool tipoValor;
     float valorReal;
-    int valorEntero;
-    bool valorBool;
   } c_expresion;
 
-#line 94 "expresiones.h"
+#line 92 "expresiones.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

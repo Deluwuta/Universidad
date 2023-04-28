@@ -1,0 +1,3 @@
+X := true
+Y := true + 2
+Z := not X

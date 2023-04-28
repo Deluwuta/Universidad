@@ -1,0 +1,6 @@
+A	entero	1
+Bb	real	25.4
+Cc	lógico	true
+aa	entero	2
+bandera	lógico	false
+logico_	lógico	false
